@@ -1,0 +1,102 @@
+{% extends 'base.html' %}
+{% block content %}
+
+
+<!-- Header-->
+    <header class="bg-dark py-5">
+        <div class="container px-5">
+            <div class="row gx-5 align-items-center justify-content-center">
+                <div class="col-lg-8 col-xl-7 col-xxl-6">
+                    <div class="my-5 text-center text-xl-start">
+                        <h1 class="display-5 fw-bolder text-white mb-2">Tildeltnummer-udregner</h1>
+                        <p class="lead fw-normal text-white-50 mb-4">Her kan du udregne tildelt nummer, og tjekke forrige udregninger ud fra ID fundet i log!</p>
+                    </div>
+                </div>
+                <div class="col-xl-5 col-xxl-6 d-none d-xl-block text-center"><img class="img-fluid rounded-3 my-5" src="data:image/jpeg;base64,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" alt="..." /></div>
+            </div>
+        </div>
+    </header>
+
+<form method="post">
+    {% csrf_token %}
+    <div class="container mt-5">
+        <div class="row justify-content-center"> <!-- Center the content horizontally -->
+            <div class="col-md-6">
+                <div class="card bg-light p-4">
+                    <div class="card-body">
+                        <h5 class="card-title text-center mb-4">Tast Selv</h5> <!-- Center the title -->
+                        <input type="number" class="form-control mb-3" placeholder="Pris" name="test1" min="0" step="1" value="{{ test1_ses }}" >
+                        <input type="date" class="form-control mb-3" placeholder="Date Field" name="test_date_fra" style="color: grey;" value="{{ test_date_fra_get_ses }}">
+                        <input type="date" class="form-control mb-3" placeholder="Date Field" name="test_date_til" style="color: grey;" value="{{ test_date_til_get_ses }}">
+                        <button type="submit" class="btn btn-primary px-4 me-sm-3">Submit</button> <!-- Make the button full width -->
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="bg-light p-4 text-left"> <!-- Align the text to the left -->
+                    <button type="button" class="btn btn-sm btn-secondary" 
+                            data-bs-toggle="popover" 
+                            data-bs-title="Popover title" 
+                            data-bs-placement="bottom"
+                            data-bs-content="Indtast værdier i felterne. Dernæst tryk på 'Udregn' og tjek om alt er korrekt. Hvis du ønsker at benytte udregningen og kopiere den i loggen, SKAL du trykke på 'Gem og vis ID' og derefter kopiere ID'et i loggen. 
+                                Du kan tjekke ethvert ID's indhold ved at kopiere det ind i det sidste felt. Du kan også blot udregne antal dage mellem datoer, ved ikke at indtaste noget i første felt. ">Hvordan bruger jeg udregneren?</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    {% if message2 %}
+    <div class="alert alert-secondary mt-3 bg-light" role="alert">
+        <p class="mb-0 text-center"> {{ message2 }} </p> <!-- Center the message -->
+        <div class="text-center"> <!-- Centering the button -->
+            <br>
+            <button type="submit" class="btn btn-primary px-4 me-sm-3" name="test_knap">Gem og vis ID</button>
+        </div>
+    </div>
+    {% endif %}
+    {% if message3 %}
+    <div class="alert alert-secondary mt-3 bg-light" role="alert">
+        <p class="mb-0 text-center"> {{ message3 }} </p> <!-- Center the message -->
+    </div>
+    {% endif %}
+</form>
+
+<!-- "tjekform" input field -->
+<div class="container mt-3">
+    <div class="row justify-content-start"> <!-- Align the content to the left -->
+        <div class="col-md-6">
+            <form id="tjekForm" method="post">
+                {% csrf_token %}
+                <div class="form-group">
+                    <input type="text" name="tast_id" id="tastIdInput" class="form-control mb-3" placeholder="Tast ID ind her">
+                </div>
+                <button class="btn btn-primary px-4 me-sm-3" type="submit" id="tjekButton" style="margin-bottom: 50px;" >Tjek ID</button> <!-- Make the button full width -->
+            </form>
+        </div>
+    </div>
+</div>
+
+<!-- JavaScript to handle form submission -->
+<script>
+    document.getElementById("tjekForm").addEventListener("submit", function(event) {
+        event.preventDefault(); // Prevent the default form submission behavior
+
+        // Get the value of the input field
+        var tastId = document.getElementById("tastIdInput").value;
+
+        // Construct the URL with the ID
+        var redirectUrl = "{% url 'tjek_id' 0 %}".replace("0", tastId); // '0' is a placeholder, will be replaced by Django's URL template tag
+
+        // Redirect the user to the constructed URL
+        window.location.href = redirectUrl;
+    });
+
+    // Logik til popover på linje 24
+    document.addEventListener('DOMContentLoaded', function() {
+        var popoverTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="popover"]'))
+        var popoverList = popoverTriggerList.map(function (popoverTriggerEl) {
+            return new bootstrap.Popover(popoverTriggerEl)
+        });
+    });
+</script>
+
+{% endblock %}

@@ -1,0 +1,28 @@
+{% extends 'base.html' %}
+
+{% block content %}  
+<br/> 
+<div class="container">
+<h1> {{ post.title }} </h1>
+<small> by: {{ post.author }}, {{ post.post_date }} </small>
+
+<hr>
+
+{{ post.body|safe }}
+
+
+<br/><br/>
+<a href="{% url 'blog' %}"> Tilbage</a>
+{% if user.id == post.author_id %}
+- <a href="{% url 'update_post' post.pk %}" class="bi bi-pencil"></a>
+<a href="{% url 'delete_post' post.pk %}" class="bi bi-trash"></a>
+{% endif %}
+
+</div>
+<br/> 
+
+{% endblock %}
+
+{% block footer %}
+
+{% endblock %}

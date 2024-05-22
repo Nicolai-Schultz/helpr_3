@@ -1,0 +1,27 @@
+{% extends 'base.html' %}
+
+{% block content %}
+{% if user.is_authenticated %}
+{% if user.id == post.author_id or user.is_superuser %}
+<div class="container">
+<br/>
+
+<h1> Opdater post </h1>
+<br/><br/>
+<div class ="form-group">
+    <form method="POST">
+        {% csrf_token %}
+        {{ form.media }}
+        {{ form.as_p }}
+        <button type="submit" class="btn btn-primary px-4 me-sm-3">Opdater</button>
+    </form>
+</div>
+</div>  
+{% else %}
+<h1> Forlad venligst siden for at logge ind og kom igen. </h1>
+{% endif %}
+{% endif %}
+{% endblock %}
+
+{% block footer %}
+{% endblock %}
