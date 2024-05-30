@@ -604,7 +604,55 @@ def åamp(request: HttpRequest):
     }
     return render(request, "åamp.html", context)
 
+def kreditmax(request: HttpRequest):
+    user_get = request.user
+    kreditmax_ses = 1
+    beløb_ses = 1
+    message = None
 
+    #   Logik til udregning - henter info fra inputs
+    #   Gemmer i session
+    request.session['kreditmax'] = request.POST.get('kreditmax')
+    request.session['beløb'] = request.POST.get('beløb')
+
+    #   Gemmer session som var
+    kreditmax_ses = request.session.get('kreditmax', '')
+    beløb_ses = request.session.get('beløb', '')
+
+    #   Formatterer tal
+    try:
+        kreditmax_ses_float = float(kreditmax_ses)
+        beløb_ses_float = float(beløb_ses)
+    except:
+        kreditmax_ses_float = 0
+        beløb_ses_float = 0
+
+
+    #   Udregning
+    konstant = 1
+    procent = 0.8
+    udregning = beløb_ses_float - (kreditmax_ses_float * procent) + konstant
+    formel = f"{beløb_ses_float} - ({kreditmax_ses_float} * {procent}) + {konstant}"
+
+    if request.method == "POST":
+        if kreditmax_ses_float >= beløb_ses_float:
+            message = "Hvis kreditmax er højere end eller lig udestående beløb er kunden ikke spærret grundet kreditmax!"
+        else:
+            message = f"<h4>Kunden skal indbetale følgende beløb: {udregning}</h4> Dette præcise beløb SKAL indbetales. Når kunden kreditspærres er det fordi vi forbinder en risiko med deres udestående. Derfor SKAL vi modtage mere end 80% af deres kreditmax før der kan genåbnes. Dette vil ske automatisk når beløbet er modtaget. Ring til kredit for yderligere spørgsmål, efter at have sparret med en FC."
+
+
+
+    context = {
+        "user_get":user_get,
+        "kreditmax_ses":kreditmax_ses,
+        "beløb_ses":beløb_ses,
+        "message":message,
+        "formel":formel,
+            }
+    return render(request, "kreditmax.html", context)
+
+
+#   Blog classes
 class BlogView(ListView):
     model = Post
     template_name = "blog.html"

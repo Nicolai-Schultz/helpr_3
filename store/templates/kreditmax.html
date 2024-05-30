@@ -1,0 +1,63 @@
+{% extends 'base.html' %}
+{% block content %}
+
+<!-- Header-->
+<header class="bg-dark py-5">
+    <div class="container px-5">
+        <div class="row gx-5 align-items-center justify-content-center">
+            <div class="col-lg-8 col-xl-7 col-xxl-6">
+                <div class="my-5 text-center text-xl-start">
+                    <h1 class="display-5 fw-bolder text-white mb-2">Kreditmax</h1>
+                    <p class="lead fw-normal text-white-50 mb-4">Her kan du udregne hvad en kunde skal indbetale for at få genåbnet sine abonnementer ihht. Kreditmax.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</header>
+
+<form method="post">
+    {% csrf_token %}
+    <div class="container mt-5 mb-5"> <!-- Added bottom margin to the container -->
+        <div class="row justify-content-center"> <!-- Center the content horizontally -->
+            <div class="col-md-8">
+                <div class="card bg-light p-5 mt-5 mb-5"> <!-- Added top and bottom margins to the card -->
+                    <div class="card-body">
+                        <h5 class="card-title text-center mb-4">Kreditmax</h5> <!-- Center the title -->
+                        <input type="number" class="form-control mb-3" placeholder="Hvad er kundens Kreditmax?" name="kreditmax" min="0" step="1" value="{{ kreditmax_ses }}">
+                        <input type="number" class="form-control mb-3" placeholder="Indsæt det totale beløb der er årsag til kreditmaks-spærringen." name="beløb" min="0" step="1" value="{{ beløb_ses }}">
+                        <div class="d-flex justify-content-center"> <!-- Center the button -->
+                            <button type="submit" class="btn btn-primary px-4 me-sm-3">Udregn</button>
+                        </div>
+                        {% if message %}
+                        <div class="alert alert-secondary mt-3 bg-light" role="alert">
+                            <p class="mb-0 text-center"> {{ message|safe }} </p> <!-- Center the message -->
+                        </div>
+                        {% endif %}
+                    </div>
+                    <div class="col-md-6">
+                        <div class="bg-light p-4 text-left"> <!-- Align the text to the left -->
+                            <button type="button" class="btn btn-sm btn-secondary" 
+                                    data-bs-toggle="popover" 
+                                    data-bs-title="Formel og årsag" 
+                                    data-bs-placement="bottom"
+                                    data-bs-content="{{ formel }}. Der tillæges 1 til udregningen da beløbet SKAL være PRÆCIST under 80% af kreditmax.">Vil du se den præcise udregning?</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</form>
+
+<!-- JavaScript to handle form submission -->
+<script>
+    // Logik til popover på linje 24
+    document.addEventListener('DOMContentLoaded', function() {
+        var popoverTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="popover"]'))
+        var popoverList = popoverTriggerList.map(function (popoverTriggerEl) {
+            return new bootstrap.Popover(popoverTriggerEl)
+        });
+    });
+</script>
+
+{% endblock %}
