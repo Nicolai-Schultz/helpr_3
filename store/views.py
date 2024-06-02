@@ -14,6 +14,7 @@ from django.views import generic
 from django.urls import reverse_lazy
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.mixins import LoginRequiredMixin
+from django.http import JsonResponse
 
 
 
@@ -651,6 +652,8 @@ def kreditmax(request: HttpRequest):
             }
     return render(request, "kreditmax.html", context)
 
+def poke(request):
+    return render(request, "poke.html")
 
 #   Blog classes
 class BlogView(ListView):

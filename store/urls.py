@@ -6,11 +6,11 @@ from django.shortcuts import redirect
 
 
 # Redirect view to send users to the login page
-def redirect_to_login(request):
-    return redirect('login')
+def redirect_to_home(request):
+    return redirect('home')
 
 urlpatterns = [
-    path("", redirect_to_login),  # Root URL redirects to the login page
+    path("", redirect_to_home),  # Root URL redirects to the login page
     path("home", views.home, name="home"),
     path("about/", views.about, name="about"),
     path("tildelt_nummer/", views.tildelt_nummer, name="tildelt_nummer"),
@@ -30,7 +30,8 @@ urlpatterns = [
     path("article/edit/<int:pk>", UpdatePostView.as_view(), name="update_post"),
     path("article/<int:pk>/delete", DeletePostView.as_view(), name="delete_post"),
     path("edit_profile/", UserEditView.as_view(), name="edit_profile"),
-    
+    path('poke/', views.poke, name='poke'),
+
 
 
 
