@@ -17,3 +17,4 @@ requests==2.32.1
 sqlparse==0.4.4
 typing_extensions==4.12.1
 urllib3==2.2.1
+whitenoise==6.6.0
