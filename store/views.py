@@ -653,7 +653,36 @@ def kreditmax(request: HttpRequest):
     return render(request, "kreditmax.html", context)
 
 def poke(request):
-    return render(request, "poke.html")
+    return render(request, "kreditmax.html")
+
+def dtfr(request: HttpRequest):
+    user_get = request.user
+
+    #   Skriv årstal på følgende måde 201701
+    #   For hvert år gået siden 2017 + originale tal med 100
+    #   Gentag 12 gange
+
+   # årstal = 201701
+
+
+    år_siden_2017 = datetime.now().year - 2016 #ændr til år_valgt
+    årstal_list = []
+
+    #   Looper index_2 7 gange. Definerer årstal med udgangspunkt i 2017. Plusser med 100, 7 gange (index_2 = 1,2->7). Looper resten 12 gange
+    for index_2 in range(år_siden_2017):
+        år = 201701+(100*index_2)
+        for index in range(12):
+            årstal = år+index
+            årstal_list.append(årstal)
+
+    context = {
+        "user_get":user_get,
+        "årstal_list":årstal_list,
+    }
+    return render(request, "dtfr.html", context)
+
+
+
 
 #   Blog classes
 class BlogView(ListView):

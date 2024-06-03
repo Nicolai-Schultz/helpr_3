@@ -23,7 +23,7 @@ urlpatterns = [
     path("stat_konkurrence_admin/", views.stat_konkurrence_admin, name="stat_konkurrence_admin"),
     path("er_det_fredag/", views.er_det_fredag, name="er_det_fredag"),
     path("åamp/", views.åamp, name="åamp"),
-    path("kreditmax", views.kreditmax, name="kreditmax"),
+    path("kreditmax/", views.kreditmax, name="kreditmax"),
     path("blog/", BlogView.as_view(), name="blog"),
     path("article/<int:pk>", ArticleDetailView.as_view(), name="article-detail"),
     path("add_post/", AddPostView.as_view(), name="add_post"),
@@ -31,6 +31,8 @@ urlpatterns = [
     path("article/<int:pk>/delete", DeletePostView.as_view(), name="delete_post"),
     path("edit_profile/", UserEditView.as_view(), name="edit_profile"),
     path('poke/', views.poke, name='poke'),
+    path("dtfr/", views.dtfr, name="dtfr"),
+
 
 
 
