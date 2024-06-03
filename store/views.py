@@ -75,36 +75,34 @@ def tildelt_nummer(request: HttpRequest):
             message2 = "Ingen udregning gives, da intet er udfyldt"
             
         if 'test_knap' in request.POST:
-            print("Nu gemmer jeg")
-            udregning_str = "{:.2f}".format(udregning)
-            test2 = Test(test1=test1, test_date_fra=test_date_fra_get, test_date_til=test_date_til_get, udregning_db=udregning_str, user=user_get)
-            test2.save()
-
-            #   Request get info fra inputfelter
-            #   Bruger filter, da den sorterer i stedet for at gette. Get tager kun en query, hvis der derfor er to krediteringer som er fuldstændig ens og lavet af samme brugere, kan de begge nu printes.
-            get_inputs = Test.objects.filter(test1=test1, test_date_fra=test_date_fra_get, test_date_til=test_date_til_get, udregning_db=udregning_str, user=user_get)
-            #   Print id til variablen der henter
-            #   Laver condition hvis der er flere rows i DB med samme indhold
-            if get_inputs.count() > 1:
-                #   Henter ID og username fra den row der er lig med inputs
-                id_user_list = get_inputs.values_list('id', 'user__username')  # Retrieve IDs and usernames
-                #   Laver om til strings. Benytter for loop for at hente alle instanser
-                id_user_str_list = [f"{id} ({username})" for id, username in id_user_list]  # Format IDs and usernames into strings
-                #   Syntaks formattering
-                id_user_str = ', '.join(id_user_str_list)  # Join formatted strings with commas
-                #   Output som f-string
-                message3 = f"Der er flere id'er med dette indhold, vælg en vilkårlig {id_user_str}"
-            elif get_inputs.count() == 1:
-                #   Hvis ikke der er flere rows med indhold fra inputs
-                message3 = f"{get_inputs[0].id} ({get_inputs[0].user.username})"
+            #   Laver try da side crasher hvis man laver udregning uden at være logget ind.
+            try:
+                print("Nu gemmer jeg")
+                udregning_str = "{:.2f}".format(udregning)
+                test2 = Test(test1=test1, test_date_fra=test_date_fra_get, test_date_til=test_date_til_get, udregning_db=udregning_str, user=user_get)
+                test2.save()
 
 
-                
+                #   Request get info fra inputfelter
+                #   Bruger filter, da den sorterer i stedet for at gette. Get tager kun en query, hvis der derfor er to krediteringer som er fuldstændig ens og lavet af samme brugere, kan de begge nu printes.
+                get_inputs = Test.objects.filter(test1=test1, test_date_fra=test_date_fra_get, test_date_til=test_date_til_get, udregning_db=udregning_str, user=user_get)
+                #   Print id til variablen der henter
+                #   Laver condition hvis der er flere rows i DB med samme indhold
+                if get_inputs.count() > 1:
+                    #   Henter ID og username fra den row der er lig med inputs
+                    id_user_list = get_inputs.values_list('id', 'user__username')  # Retrieve IDs and usernames
+                    #   Laver om til strings. Benytter for loop for at hente alle instanser
+                    id_user_str_list = [f"{id} ({username})" for id, username in id_user_list]  # Format IDs and usernames into strings
+                    #   Syntaks formattering
+                    id_user_str = ', '.join(id_user_str_list)  # Join formatted strings with commas
+                    #   Output som f-string
+                    message3 = f"Der er flere id'er med dette indhold, vælg en vilkårlig {id_user_str}"
+                elif get_inputs.count() == 1:
+                    #   Hvis ikke der er flere rows med indhold fra inputs
+                    message3 = f"{get_inputs[0].id} ({get_inputs[0].user.username})"
+            except:
+                messages.success(request, 'Log venligst ind for at gemme ID.')
 
-
-            
-
-        
         # -- Create new entry in DB -- 
         #   Creating if where the condition is met if field is filled out.
         #if condition:

@@ -62,11 +62,18 @@
                                     <a class="h5" href="{% url 'dtfr' %}">DatoerTilFremsøgning</a>
                                     <p class="mb-0">Her kan du kopiere datoer til fremsøgning i Veris! </p>
                                 </div>
+                                {% if user.is_authenticated %}
                                 <div class="col h-100" style="padding-top: 50px;"> <!-- Added padding top -->
                                     <div class="feature bg-primary bg-gradient text-white rounded-3 mb-3"><i class="bi bi-pencil" style="margin-left: 8px;"></i></div>
                                     <a class="h5" href="{% url 'edit_profile' %}">Rediger Din Profil</a>
                                     <p class="mb-0">Her kan du redigere dit brugernavn og mail... Indtil videre. </p>
                                 </div>
+                                {% else %}
+                                <div class="col h-100" style="padding-top: 50px;"> <!-- Added padding top -->
+                                    <div class="feature bg-primary bg-gradient text-white rounded-3 mb-3"><i class="bi bi-pencil" style="margin-left: 8px;"></i></div>
+                                    <p class="mb-0">Log ind for at redigere profil! Her kan du redigere dit brugernavn og mail... Indtil videre. </p>
+                                </div>
+                                {% endif %}
                             </div>
                         </div>
                     </div>
