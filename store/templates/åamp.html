@@ -1,0 +1,72 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+    <!-- Header-->
+    <header class="bg-dark py-5 mb-5">
+        <div class="container px-4 px-lg-5 my-5">
+            <div class="text-center text-white">
+                <h1 class="display-4 fw-bolder">ÅbenAlleMineProgrammer</h1>
+                <p class="lead fw-normal text-white-50 mb-0">Lavet af Nicolai Schultz</p>
+            </div>
+        </div>
+    </header>
+
+    <form method="post">
+        {% csrf_token %}
+        <!-- Dropdown Section -->
+        <div class="col-md-6 offset-md-3"> <!-- Offset to center the dropdown -->
+            <div class="form-group">
+                <label for="link_dropdown">Hvilke sider skal åbnes?</label>
+                <div class="input-group">
+                    <select class="form-control" id="link_dropdown" name="link_dropdown" multiple> <!-- Add multiple attribute here -->
+                       <!-- Add multiple attribute here  <option value="{{ user_felt_ses }}">{{ user_felt_ses }}</option> -->
+                        {% for all_links in links %}
+                        <option value="{{ all_links }}">{{ all_links }}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+                <button type="submit" class="btn btn-primary px-4 mt-3" name="user_felt_knap">GO</button>
+            </div>
+        </div>
+    </form>
+    
+    <!-- Display selected links -->
+    <div class="col-md-6 offset-md-3">
+        <div class="form-group">
+            <label>Valgte links:</label>
+            <div>
+                {% if selected_links %}
+                    {% for link in selected_links %}
+                        <a href="{{ link }}" target="_blank" class="btn btn-link">{{ link }}</a>
+                    {% endfor %}
+                {% else %}
+                    <p>Ingen links valgt</p>
+                {% endif %}
+            </div>
+            <button type="submit" class="btn btn-primary px-4 mt-3" id="clickLinksButton">Åben valgte links!</button>
+        </div>
+    </div>
+    
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Add click event listener to the button
+            document.getElementById('clickLinksButton').addEventListener('click', function() {
+                // Get all the links
+                var links = document.querySelectorAll('a');
+        
+                // Loop through each link and open in a new window
+                links.forEach(function(link) {
+                    // Check if the link contains the base URL of your site
+                    // If it does, skip opening it in a new window
+                    if (!link.href.includes('{{ request.get_host }}')) {
+                        window.open(link.href, '_blank');
+                    }
+                });
+            });
+        });
+        </script>
+    
+
+{% endblock %}

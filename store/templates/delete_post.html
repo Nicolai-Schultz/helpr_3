@@ -1,0 +1,30 @@
+{% extends 'base.html' %}
+
+{% block content %}
+{% if user.is_authenticated %}
+{% if user.id == post.author_id or user.is_superuser %}
+
+<div class="container">
+<br/>
+
+<h1> Delete post </h1>
+<br/><br/>
+<h3> Delete: {{ post.title }} </h3>
+<div class ="form-group">
+    <form method="POST">
+        {% csrf_token %}
+        <strong> Er du sikker? </strong>
+        <br/><br/>
+        <button type="submit" class="btn btn-primary px-4 me-sm-3">Delete</button>
+    </form>
+</div>
+</div>  
+{% else %}
+<h1> Log ind for at slette post  </h1>
+{% endif %}
+{% endif %}
+
+{% endblock %}
+
+{% block footer %}
+{% endblock %}
