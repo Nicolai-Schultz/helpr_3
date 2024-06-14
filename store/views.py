@@ -15,7 +15,7 @@ from django.urls import reverse_lazy
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.http import JsonResponse
-
+import subprocess
 
 
 def home(request: HttpRequest):
@@ -679,6 +679,15 @@ def dtfr(request: HttpRequest):
     }
     return render(request, "dtfr.html", context)
 
+def pause(request):
+    if request.method == 'POST':
+        try:
+            # Run the Python script
+            subprocess.run(['python', './pause.py'], check=True)
+            return JsonResponse({'status': 'success'})
+        except subprocess.CalledProcessError as e:
+            return JsonResponse({'status': 'error', 'message': str(e)})
+    return render(request, "pause.html")
 
 
 

@@ -32,6 +32,8 @@ urlpatterns = [
     path("edit_profile/", UserEditView.as_view(), name="edit_profile"),
     path('poke/', views.poke, name='poke'),
     path("dtfr/", views.dtfr, name="dtfr"),
+    path("pause/", views.pause, name="pause"),
+
 
 
 

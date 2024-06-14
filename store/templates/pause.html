@@ -1,0 +1,50 @@
+{% extends 'base.html' %}
+
+{% block content %}
+    <!-- Header -->
+    <header class="bg-dark py-5 mb-5">
+        <div class="container px-4 px-lg-5 my-5">
+            <div class="text-center text-white">
+                <h1 class="display-4 fw-bolder">ÅbenAlleMineProgrammer</h1>
+                <p class="lead fw-normal text-white-50 mb-0">Lavet af Nicolai Schultz</p>
+            </div>
+        </div>
+    </header>
+
+    <form method="post">
+        {% csrf_token %}
+
+        <!-- Display selected links -->
+        <div class="col-md-6 offset-md-3">
+            <div class="form-group">
+                <button type="button" class="btn btn-primary px-4 mt-3" id="clickLinksButton">Åben valgte links!</button>
+            </div>
+        </div>
+    </form>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            document.getElementById('clickLinksButton').addEventListener('click', function() {
+                fetch("{% url 'pause' %}", {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'X-CSRFToken': '{{ csrf_token }}',
+                    },
+                    body: JSON.stringify({})
+                })
+                .then(response => response.json())
+                .then(data => {
+                    if (data.status === 'success') {
+                        alert('Script ran successfully!');
+                    } else {
+                        alert('Error: ' + data.message);
+                    }
+                })
+                .catch(error => {
+                    alert('An error occurred: ' + error);
+                });
+            });
+        });
+    </script>
+{% endblock %}
